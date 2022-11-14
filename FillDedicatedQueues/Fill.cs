@@ -9,7 +9,7 @@ using Clients.Services;
 /// <summary>
 /// Client
 /// </summary>
-class Client
+class Fill
 {
 	/// <summary>
 	/// Logger for this class.
@@ -86,7 +86,7 @@ class Client
 	/// <param name="args">Command line arguments.</param>
 	static void Main(string[] args)
 	{
-		var self = new Client();
+		var self = new Fill();
 		self.Run();
 	}
 }
