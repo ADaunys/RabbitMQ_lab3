@@ -18,6 +18,7 @@ class Server
     public static int capacity = new Random().Next(0, 100);
     public static int lowerBound = 0;
     public static int upperBound = 0;
+    public static bool clientIsActive = false;
 
     /// <summary>
     /// Program body.
@@ -34,15 +35,20 @@ class Server
                 //start service
                 var service = new Service();
 
-                //
                 log.Info("Server has been started.");
 
                 //hang main thread						
                 while (true)
                 {
+                    if (clientIsActive)
+                    {
+                        log.Info("Client is working...");
+                        Thread.Sleep(2000);
+                        Server.clientIsActive = false;
+                    }
                     lowerBound = new Random().Next(0, 50);
                     upperBound = new Random().Next(lowerBound + 1, 100);
-                    log.Info("Bounds changed to: " + lowerBound + " " + upperBound);
+                    log.Info("Bounds changed to: " + lowerBound + " " + upperBound + " and current capacity is: " + capacity);
                     Thread.Sleep(4000);
                 }
             }

@@ -17,6 +17,7 @@ class ServiceLogic : IService
     {
         if (Server.capacity > Server.upperBound)
         {
+            Server.clientIsActive = true;
             return true;
         }
         return false;
@@ -25,6 +26,7 @@ class ServiceLogic : IService
     {
         if (Server.capacity < Server.lowerBound)
         {
+            Server.clientIsActive = true;
             return true;
         }
         return false;

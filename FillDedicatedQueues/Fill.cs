@@ -37,13 +37,25 @@ class Fill
 
                 while (true)
                 {
-                    //test simple call
-                    var left = rnd.Next(-100, 100);
-                    var right = rnd.Next(-100, 100);
+                    var canAdd = service.CanAdd();
 
-                    log.Info($"Before 'int Add(int, int)': left={left}, right={right}");
-                    var sum = service.AddLiteral(left, right);
-                    log.Info($"After 'int Add(int, int)': sum={sum}, left={left}, right={right}\n");
+                    Thread.Sleep(2000);
+
+                    var liquidToAdd = rnd.Next(1, 20);
+
+                    if (canAdd)
+                    {
+                        log.Info($"Generated amount to add: {liquidToAdd}");
+                        var addedLiquid = service.Add(liquidToAdd);
+                        log.Info($"Amount of liquid added: {addedLiquid}");
+                        log.Info("\n");
+                    }
+                    else
+                    {
+                        log.Info("I cannot add any more liquid");
+                        log.Info("\n");
+                    }
+                    log.Info("---");
 
                     Thread.Sleep(2000);
                 }
