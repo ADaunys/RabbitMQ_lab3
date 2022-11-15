@@ -1,5 +1,4 @@
-namespace Servers;
-
+namespace Clients.Services;
 
 /// <summary>
 /// Structure for testing pass-by-value calls.
@@ -24,32 +23,19 @@ public class WaterContainer
 
 /// <summary>
 /// Service contract.
-/// </summary>	
+/// </summary>
 public interface IService
 {
-    /// <summary>
-    /// Check if liquid can be subtracted from the capacity
-    /// </summary>
-    /// <returns>boolean</returns>
-    bool CanSubtractLiquid();
-
     /// <summary>
     /// Check if liquid can be added to the capacity
     /// </summary>
     /// <returns>boolean</returns>
-	bool CanAddLiquid();
+	bool CanAdd();
 
     /// <summary>
     /// Add liquid to the capacity
     /// </summary>
     /// <param name="amount">Amount of liquid to add</param>
     /// <returns>Amount of liquid to be added</returns>
-    int AddLiquid(int amount);
-
-    /// <summary>
-    /// Subtract liquid from the capacity
-    /// </summary>
-    /// <param name="amount">Amount of liquid to subtract</param>
-    /// <returns>Amount of liquid to be subtracted</returns>
-    int SubtractLiquid(int amount);
+    int Add(int amount);
 }

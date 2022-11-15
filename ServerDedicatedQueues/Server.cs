@@ -10,51 +10,66 @@ using Commons.Utils;
 /// </summary>
 class Server
 {
-	/// <summary>
-	/// Logger for this class.
-	/// </summary>
-	private Logger log = LogManager.GetCurrentClassLogger();
+    /// <summary>
+    /// Logger for this class.
+    /// </summary>
+    private Logger log = LogManager.GetCurrentClassLogger();
 
-	/// <summary>
-	/// Program body.
-	/// </summary>
-	private void Run() {
-		//configure logging
-		LoggingUtil.ConfigureNLog();
+    public static int capacity = new Random().Next(0, 100);
+    public static int lowerBound = 0;
+    public static int upperBound = 0;
+    public static bool clientIsActive = false;
 
-		while( true )
-		{
-			try 
-			{
-				//start service
-				var service = new Service();
+    /// <summary>
+    /// Program body.
+    /// </summary>
+    private void Run()
+    {
+        //configure logging
+        LoggingUtil.ConfigureNLog();
 
-				//
-				log.Info("Server has been started.");
+        while (true)
+        {
+            try
+            {
+                //start service
+                var service = new Service();
 
-				//hang main thread						
-				while( true ) {
-					Thread.Sleep(1000);
-				}
-			}
-			catch( Exception e ) 
-			{
-				//log exception
-				log.Error(e, "Unhandled exception caught. Server will now restart.");
+                log.Info("Server has been started.");
 
-				//prevent console spamming
-				Thread.Sleep(2000);
-			}
-		}
-	}
+                //hang main thread						
+                while (true)
+                {
+                    if (clientIsActive)
+                    {
+                        log.Info("Client is working...");
+                        Thread.Sleep(2000);
+                        Server.clientIsActive = false;
+                    }
+                    lowerBound = new Random().Next(0, 50);
+                    upperBound = new Random().Next(lowerBound + 1, 100);
+                    log.Info("Bounds changed to: " + lowerBound + " " + upperBound + " and current capacity is: " + capacity);
+                    Thread.Sleep(4000);
+                }
+            }
+            catch (Exception e)
+            {
+                //log exception
+                log.Error(e, "Unhandled exception caught. Server will now restart.");
 
-	/// <summary>
-	/// Program entry point.
-	/// </summary>
-	/// <param name="args">Command line arguments.</param>
-	static void Main(string[] args)
-	{
-		var self = new Server();
-		self.Run();
-	}
+                //prevent console spamming
+                Thread.Sleep(2000);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Program entry point.
+    /// </summary>
+    /// <param name="args">Command line arguments.</param>
+    static void Main(string[] args)
+    {
+        var self = new Server();
+        self.Run();
+    }
 }
