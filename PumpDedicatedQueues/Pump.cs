@@ -45,27 +45,6 @@ class Pump
                     var sum = service.AddLiteral(left, right);
                     log.Info($"After 'int Add(int, int)': sum={sum}, left={left}, right={right}\n");
 
-                    left = rnd.Next(-100, 100);
-                    right = rnd.Next(-100, 100);
-                    var leftAndRight = new ByValStruct() { Left = left, Right = right };
-
-                    Thread.Sleep(2000);
-
-                    //test passing structures by value
-                    log.Info(
-                        $"Before 'ByValStruct Add(ByValStruct)': leftAndRight=ByValStruct" +
-                        $"(Left={leftAndRight.Left}, Right={leftAndRight.Right}, Sum={leftAndRight.Sum})"
-                    );
-                    var result = service.AddStruct(leftAndRight);
-                    log.Info(
-                        $"After 'ByValStruct Add(ByValStruct)': leftAndRight=ByValStruct" +
-                        $"(Left={leftAndRight.Left}, Right={leftAndRight.Right}, Sum={leftAndRight.Sum})"
-                    );
-                    log.Info(
-                        $"After 'ByValStruct Add(ByValStruct)': result=ByValStruct" +
-                        $"(Left={result.Left}, Right={result.Right}, Sum={result.Sum})\n"
-                    );
-
                     Thread.Sleep(2000);
                 }
             }

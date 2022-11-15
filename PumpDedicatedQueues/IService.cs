@@ -3,23 +3,22 @@ namespace Clients.Services;
 /// <summary>
 /// Structure for testing pass-by-value calls.
 /// </summary>
-public class ByValStruct
+public class WaterContainer
 {
-	/// <summary>
-	/// Left number.
-	/// </summary>
-	public int Left{ get; set; }
+    /// <summary>
+    /// Capacity
+    /// </summary>
+    public int Capacity { get; set; }
 
-	/// <summary>
-	/// Right number.
-	/// </summary>
-	/// <value></value>
-	public int Right{ get; set; }
+    /// <summary>
+    /// Upper bound
+    /// </summary>
+    public int UpperBound { get; set; }
 
-	/// <summary>
-	/// Left + Right
-	/// </summary>
-	public int Sum{ get; set; }
+    /// <summary>
+    /// Lower bound
+    /// </summary>
+    public int LowerBound { get; set; }
 }
 
 /// <summary>
@@ -27,18 +26,16 @@ public class ByValStruct
 /// </summary>
 public interface IService
 {
-	/// <summary>
-	/// Add given numbers.
-	/// </summary>
-	/// <param name="left">Left number.</param>
-	/// <param name="right">Right number.</param>
-	/// <returns>left + right</returns>
-	int AddLiteral(int left, int right);
+    /// <summary>
+    /// Check if liquid can be subtracted from the capacity
+    /// </summary>
+    /// <returns>boolean</returns>
+    bool CanSubtract();
 
-	/// <summary>
-	/// Add given numbers.
-	/// </summary>
-	/// <param name="leftAndRight">Numbers to add.</param>
-	/// <returns>Left + Right in Sum</returns>
-	ByValStruct AddStruct(ByValStruct leftAndRight);
+    /// <summary>
+    /// Subtract liquid from the capacity
+    /// </summary>
+    /// <param name="amount">Amount of liquid to subtract</param>
+    /// <returns>Amount of liquid to be subtracted</returns>
+    int Subtract(int amount);
 }

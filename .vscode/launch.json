@@ -34,5 +34,15 @@
       "console": "externalTerminal",
       "stopAtEntry": false
     }
+  ],
+  "compounds": [
+    {
+      "name": "All",
+      "configurations": [
+        "FillDedicatedQueues",
+        "PumpDedicatedQueues",
+        "ServerDedicatedQueues"
+      ]
+    }
   ]
 }

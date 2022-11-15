@@ -195,19 +195,26 @@ class ServiceClient : IService
         return result;
     }
 
-    /// <summary>
-    /// Add given numbers.
-    /// </summary>
-    /// <param name="leftAndRight">Numbers to add.</param>
-    /// <returns>Left + Right in Sum</returns>
-    public ByValStruct AddStruct(ByValStruct leftAndRight)
+    public bool CanAdd()
+    {
+        bool result =
+            Call(
+                "Call_CanAdd",
+                () => null,
+                "Result_CanAdd",
+                (data) => JsonConvert.DeserializeAnonymousType(data, new { Result = false }).Result
+            );
+        return result;
+    }
+
+    public int Add(int amount)
     {
         var result =
             Call(
-                "Call_AddStruct",
-                () => JsonConvert.SerializeObject(leftAndRight),
-                "Result_AddStruct",
-                (data) => JsonConvert.DeserializeObject<ByValStruct>(data)
+                "Call_Add",
+                () => JsonConvert.SerializeObject(new { Amount = amount }),
+                "Result_Add",
+                (data) => JsonConvert.DeserializeAnonymousType(data, new { Result = 0 }).Result
             );
         return result;
     }

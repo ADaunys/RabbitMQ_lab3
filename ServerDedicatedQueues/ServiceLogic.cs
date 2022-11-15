@@ -6,34 +6,71 @@ using NLog;
 /// <summary>
 /// Service logic.
 /// </summary>
-class ServiceLogic : IService 
+class ServiceLogic : IService
 {
-	/// <summary>
-	/// Logger for this class.
-	/// </summary>
-	private Logger log = LogManager.GetCurrentClassLogger();
+    /// <summary>
+    /// Logger for this class.
+    /// </summary>
+    private Logger log = LogManager.GetCurrentClassLogger();
 
-	/// <summary>
-	/// Add given numbers.
-	/// </summary>
-	/// <param name="left">Left number.</param>
-	/// <param name="right">Right number.</param>
-	/// <returns>left + right</returns>
-	public int AddLiteral(int left, int right)
-	{
-		log.Info($"AddLiteral({left}, {right})");
-		return left + right;
-	}
+    public bool CanSubtractLiquid()
+    {
+        if (Server.capacity > Server.upperBound)
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool CanAddLiquid()
+    {
+        if (Server.capacity < Server.lowerBound)
+        {
+            return true;
+        }
+        return false;
+    }
 
-	/// <summary>
-	/// Add given numbers.
-	/// </summary>
-	/// <param name="leftAndRight">Numbers to add.</param>
-	/// <returns>Left + Right in Sum</returns>
-	public ByValStruct AddStruct(ByValStruct leftAndRight)
-	{
-		log.Info($"AddStruct(ByValStruct(Left={leftAndRight.Left}, Right={leftAndRight.Right}))");
-		leftAndRight.Sum = leftAndRight.Left + leftAndRight.Right;
-		return leftAndRight;
-	}
+    public int SubtractLiquid(int amount)
+    {
+        if (Server.capacity - amount < Server.upperBound)
+        {
+            var startingCapacity = Server.capacity;
+            log.Info($"Capacity before subtracting: {startingCapacity}");
+            int overpumped = Server.upperBound - (startingCapacity - amount);
+            Server.capacity = Server.upperBound;
+            log.Info($"Capacity after subtracting: {Server.capacity}");
+            log.Info($"Amount of liquid thrown away: {overpumped}");
+            log.Info("\n");
+            return startingCapacity - Server.upperBound;
+        }
+        else
+        {
+            log.Info("Capacity before subtracting: " + Server.capacity);
+            Server.capacity -= amount;
+            log.Info($"Capacity after subtracting: {Server.capacity}");
+            log.Info("\n");
+            return amount;
+        }
+    }
+
+    public int AddLiquid(int amount)
+    {
+        if (Server.capacity + amount > Server.lowerBound)
+        {
+            var startingCapacity = Server.capacity;
+            log.Info($"Capacity before adding: {startingCapacity}");
+            int overfilled = (startingCapacity + amount) - Server.lowerBound;
+            Server.capacity = Server.lowerBound;
+            log.Info($"Capacity after adding: {Server.capacity}");
+            log.Info($"Amount of liquid thrown away: {overfilled}");
+            return Server.lowerBound - startingCapacity;
+        }
+        else
+        {
+            log.Info("Capacity before adding: " + Server.capacity);
+            Server.capacity += amount;
+            log.Info($"Capacity after adding: {Server.capacity}");
+            return amount;
+        }
+    }
 }
