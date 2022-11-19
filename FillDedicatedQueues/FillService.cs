@@ -177,24 +177,6 @@ class ServiceClient : IService
         return result;
     }
 
-    /// <summary>
-    /// Add given numbers.
-    /// </summary>
-    /// <param name="left">Left number.</param>
-    /// <param name="right">Right number.</param>
-    /// <returns>left + right</returns>
-    public int AddLiteral(int left, int right)
-    {
-        var result =
-            Call(
-                "Call_AddLiteral",
-                () => JsonConvert.SerializeObject(new { Left = left, Right = right }),
-                "Result_AddLiteral",
-                (data) => JsonConvert.DeserializeAnonymousType(data, new { Result = 0 }).Result
-            );
-        return result;
-    }
-
     public bool CanAdd()
     {
         bool result =
